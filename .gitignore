@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Streamlit specific
+.streamlit/
+streamlit/
+
+# Video outputs
+*.mp4
+*.flv
+*.avi
+*.mov
+
+# JSON or local data files
+session_mistakes.json
+
+# Credentials or sensitive files
+hashed.pkl
+secrets.toml

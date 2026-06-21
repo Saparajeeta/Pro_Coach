@@ -1,0 +1,9 @@
+numpy
+opencv-python-headless
+mediapipe==0.10.14
+streamlit
+streamlit_webrtc
+pyttsx3
+plotly
+streamlit-authenticator
+streamlit-calendar
