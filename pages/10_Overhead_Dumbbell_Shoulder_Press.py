@@ -4,6 +4,8 @@ import numpy as np
 import streamlit as st
 import av
 from streamlit_webrtc import webrtc_streamer, VideoHTMLAttributes
+from aiortc.contrib.media import MediaRecorder
+import os
 
 # Streamlit UI configuration
 st.set_page_config(page_title="Shoulder Press AI", page_icon="🏋️", layout="wide")
@@ -97,6 +99,14 @@ class ShoulderPressProcessor:
 
 processor = ShoulderPressProcessor()
 
+if 'download_shoulder' not in st.session_state:
+    st.session_state['download_shoulder'] = False
+
+output_video_file = 'output_shoulder_press.flv'
+
+def out_recorder_factory() -> MediaRecorder:
+    return MediaRecorder(output_video_file)
+
 def video_frame_callback(frame: av.VideoFrame):
     img = frame.to_ndarray(format="bgr24")
     img = processor.process(img)
@@ -107,5 +117,19 @@ webrtc_streamer(
     video_frame_callback=video_frame_callback,
     rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
     media_stream_constraints={"video": True, "audio": False},
-    video_html_attrs=VideoHTMLAttributes(autoPlay=True, controls=False, muted=False)
+    video_html_attrs=VideoHTMLAttributes(autoPlay=True, controls=False, muted=False),
+    out_recorder_factory=out_recorder_factory
 )
+
+download_button = st.empty()
+
+if os.path.exists(output_video_file):
+    with open(output_video_file, 'rb') as op_vid:
+        download = download_button.download_button('Download Video', data=op_vid, file_name='shoulder_press_live.flv')
+        if download:
+            st.session_state['download_shoulder'] = True
+
+if os.path.exists(output_video_file) and st.session_state['download_shoulder']:
+    os.remove(output_video_file)
+    st.session_state['download_shoulder'] = False
+    download_button.empty()
