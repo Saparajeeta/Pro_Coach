@@ -140,7 +140,7 @@ def generate_plan(days, goal, experience, pushups):
 
 btn_col1, btn_col2, btn_col3 = st.columns([1,2,1])
 with btn_col2:
-    submit = st.button("🚀 Generate Personalized Plan", use_container_width=True, type="primary")
+    submit = st.button("🚀 Generate Personalized Plan", width='stretch', type="primary")
 
 if submit:
     with st.spinner("Analyzing profile and building optimal routine..."):

@@ -90,7 +90,7 @@ with col_left:
         plot_bgcolor='rgba(0,0,0,0)',
         font=dict(color="white")
     )
-    st.plotly_chart(fig_radar, use_container_width=True)
+    st.plotly_chart(fig_radar, width='stretch')
 
 with col_right:
     st.subheader("Reps Volume Over Time")
@@ -99,7 +99,7 @@ with col_right:
                         barmode='group',
                         color_discrete_sequence=['#1E88E5', '#FF4B4B'])
     fig_volume.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color="white"))
-    st.plotly_chart(fig_volume, use_container_width=True)
+    st.plotly_chart(fig_volume, width='stretch')
 
 st.divider()
 st.subheader("Kinematic Accuracy Trend")
@@ -107,7 +107,7 @@ fig_acc = px.line(df, x='Date', y='Accuracy (%)', color='Exercise', markers=True
                   title="Form Accuracy Tracking by Exercise",
                   color_discrete_sequence=px.colors.qualitative.Pastel)
 fig_acc.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color="white"))
-st.plotly_chart(fig_acc, use_container_width=True)
+st.plotly_chart(fig_acc, width='stretch')
 
 import json
 import os

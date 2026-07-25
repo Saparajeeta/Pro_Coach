@@ -74,4 +74,4 @@ st.divider()
 st.markdown("<h4 align='center'>Ready to test your own form?</h4>", unsafe_allow_html=True)
 col_btn1, col_btn2, col_btn3 = st.columns([1,1,1])
 with col_btn2:
-    st.page_link("pages/Squat AI Trainer.py", label="🚀 Launch Squat AI Trainer", use_container_width=True)
+    st.page_link("pages/Squat AI Trainer.py", label="🚀 Launch Squat AI Trainer", width='stretch')
