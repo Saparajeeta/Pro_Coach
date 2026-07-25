@@ -5,15 +5,21 @@ import os
 def apply_custom_style():
     """Injects premium CSS and loads custom background if available."""
     
-    # 1. Check for custom background image (background.jpg)
+    # 1. Check for custom background image (background.png or background.jpg)
     bg_css = ""
-    bg_path = "background.jpg"
-    if os.path.exists(bg_path):
+    bg_path = None
+    if os.path.exists("background.png"):
+        bg_path = "background.png"
+    elif os.path.exists("background.jpg"):
+        bg_path = "background.jpg"
+
+    if bg_path:
         with open(bg_path, "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode()
+            mime_type = "image/png" if bg_path.endswith('.png') else "image/jpeg"
         bg_css = f"""
         .stApp {{
-            background-image: linear-gradient(rgba(10, 10, 12, 0.8), rgba(10, 10, 12, 0.9)), url("data:image/jpeg;base64,{encoded_string}");
+            background-image: linear-gradient(rgba(10, 10, 12, 0.8), rgba(10, 10, 12, 0.9)), url("data:{mime_type};base64,{encoded_string}");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
