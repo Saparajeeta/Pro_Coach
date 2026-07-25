@@ -4,6 +4,16 @@ import sys
 import streamlit as st
 from streamlit_webrtc import VideoHTMLAttributes, webrtc_streamer
 from aiortc.contrib.media import MediaRecorder
+
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import custom_style
+custom_style.apply_custom_style()
+
+if not st.session_state.get('authentication_status'):
+    st.info('Please login from the Homepage to access this module.')
+    st.stop()
+
 from Homepage import set_sidebar_visibility  
 
 BASE_DIR = os.path.abspath(os.path.join(__file__, '../../'))
@@ -40,6 +50,8 @@ output_video_file = f'output_live.flv'
 def video_frame_callback(frame: av.VideoFrame):
     frame = frame.to_ndarray(format="rgb24")  # Decode and get RGB frame
     frame, _ = live_process_frame.process(frame, pose)  # Process frame
+    import cv2
+    frame = cv2.resize(frame, (720, 480))
     return av.VideoFrame.from_ndarray(frame, format="rgb24")  # Encode and return BGR frame
 
 

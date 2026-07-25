@@ -4,16 +4,29 @@ from PIL import Image
 import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth
+import os
+from dotenv import load_dotenv
+import security
+import custom_style
+
+# 1. Security Check
+security.verify_integrity()
+
+# 2. Load Environment Variables
+load_dotenv()
 
 def set_sidebar_visibility(authentication_status):
     return authentication_status
 
-# Update the page browser tab configuration using a direct emoji asset instead of an image file
+# Update the page browser tab configuration
 st.set_page_config(
-    layout="centered",
+    layout="wide",
     page_title="🦾 The Pro Coach - AI Assistant",
     page_icon="🦾",
 )
+
+# Apply global premium styling
+custom_style.apply_custom_style()
 
 file_path = Path(__file__).parent / "hashed.pkl"
 
@@ -21,11 +34,11 @@ users_data = {
     "usernames": {
         "aparajeeta": {
             "name": "Aparajeeta",
-            "password": "apara123"
+            "password": os.getenv("APARA_PASS", "fallback_pass")
         },
         "aditya": {
             "name": "Aditya",
-            "password": "adit123"
+            "password": os.getenv("ADIT_PASS", "fallback_pass")
         }
     }
 }
@@ -37,7 +50,7 @@ with open(file_path, "rb") as f:
 authenticator = stauth.Authenticate(
     credentials=users_data,
     cookie_name="The Pro Coach AI",
-    cookie_key="the_pro_coach_ai_secret_key_2026_very_secure_12345",
+    cookie_key=os.getenv("COOKIE_KEY", "fallback_cookie_key"),
     cookie_expiry_days=30
 )
 
@@ -135,35 +148,17 @@ elif authentication_status is True:
     )
     st.divider()
 
-    st.markdown(
-        """
-        <style>
-        .metric-card {
-            background-color: #1E1E1E;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            border: 1px solid #333;
-        }
-        .metric-card h2 { color: #1E88E5; margin: 0; font-size: 2.5rem; padding-bottom: 5px; }
-        .metric-card p { color: #AAA; margin: 0; font-size: 1.1rem; font-weight: bold; }
-        .metric-card .sub-text { font-size: 0.9rem; color: #777; font-weight: normal; }
-        </style>
-        """, unsafe_allow_html=True
-    )
-
     st.markdown("<h2 align='center'>🏆 Your Fitness Dashboard</h2>", unsafe_allow_html=True)
     new_line(1)
 
     # Gamification stats
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("<div class='metric-card'><p>Current Level</p><h2>5</h2><p class='sub-text'>Iron Lifter</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='premium-card'><p>Current Level</p><h2>5</h2><p class='sub-text'>Iron Lifter</p></div>", unsafe_allow_html=True)
     with col2:
-        st.markdown("<div class='metric-card'><p>Total XP</p><h2>12.4k</h2><p class='sub-text'>Top 15% of users</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='premium-card'><p>Total XP</p><h2>12.4k</h2><p class='sub-text'>Top 15% of users</p></div>", unsafe_allow_html=True)
     with col3:
-        st.markdown("<div class='metric-card'><p>Active Streak</p><h2>4</h2><p class='sub-text'>Days 🔥</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='premium-card'><p>Active Streak</p><h2>4</h2><p class='sub-text'>Days 🔥</p></div>", unsafe_allow_html=True)
     
     new_line(2)
     st.progress(75, text="75% to Level 6 (Titan)")

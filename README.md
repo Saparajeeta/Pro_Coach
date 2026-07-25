@@ -70,6 +70,7 @@ streamlit run Homepage.py
 - `utils.py`: Helper functions for drawing landmarks and analyzing angles.
 - `requirements.txt`: Python package dependencies.
 
-## 📄 License
+## 📄 Copyright & License
 
-This project is licensed under the MIT License.
+© 2026 Aparajeeta & Aditya. All Rights Reserved. 
+This is a proprietary final year academic project. Unauthorized copying, modification, distribution, or use of this repository is strictly prohibited without explicit permission.

@@ -9,6 +9,16 @@ from aiortc.contrib.media import MediaRecorder
 import os
 
 st.set_page_config(page_title="Tree Pose AI", page_icon="🧘", layout="wide")
+
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import custom_style
+custom_style.apply_custom_style()
+
+if not st.session_state.get('authentication_status'):
+    st.info('Please login from the Homepage to access this module.')
+    st.stop()
+
 st.title("🧘 Tree Pose (Vrikshasana)")
 st.markdown("Hold your tree pose. The timer starts when your knee angle is <= 60 degrees.")
 
@@ -121,6 +131,8 @@ def out_recorder_factory() -> MediaRecorder:
 def video_frame_callback(frame: av.VideoFrame):
     img = frame.to_ndarray(format="bgr24")
     img = processor.process(img)
+    import cv2
+    img = cv2.resize(img, (720, 480))
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
 webrtc_streamer(

@@ -6,6 +6,16 @@ set_sidebar_visibility(st.session_state.get("authentication_status"))
 
 st.set_page_config(layout="wide", page_title="Form Masterclass")
 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import custom_style
+custom_style.apply_custom_style()
+
+if not st.session_state.get('authentication_status'):
+    st.info('Please login from the Homepage to access this module.')
+    st.stop()
+
+
 st.markdown(
     """
     <style>
