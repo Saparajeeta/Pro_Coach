@@ -3,6 +3,7 @@ from streamlit_calendar import calendar
 import json
 
 import sys
+import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import custom_style
 custom_style.apply_custom_style()

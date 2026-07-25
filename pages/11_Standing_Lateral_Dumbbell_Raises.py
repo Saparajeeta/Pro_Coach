@@ -10,6 +10,7 @@ import os
 st.set_page_config(page_title="Lateral Raises AI", page_icon="🏋️", layout="wide")
 
 import sys
+import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import custom_style
 custom_style.apply_custom_style()
