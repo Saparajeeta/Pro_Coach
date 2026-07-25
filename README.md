@@ -72,5 +72,5 @@ streamlit run Homepage.py
 
 ## 📄 Copyright & License
 
-© 2026 Aparajeeta & Aditya. All Rights Reserved. 
+© 2026 Aparajeeta. All Rights Reserved. 
 This is a proprietary final year academic project. Unauthorized copying, modification, distribution, or use of this repository is strictly prohibited without explicit permission.
