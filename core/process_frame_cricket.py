@@ -3,6 +3,7 @@ import time
 import cv2
 import numpy as np
 
+from audio_feedback import speak_feedback
 from utils import draw_text, find_angle, get_landmark_features
 
 
@@ -131,20 +132,26 @@ class ProcessFrameCricket:
             if state == "s2" and self.state_tracker["state_seq"] == ["s1", "s2"]:
                 self.state_tracker["CRICKET_COUNT"] += 1
                 play_sound = str(self.state_tracker["CRICKET_COUNT"])
+                if self.state_tracker["INCORRECT_POSTURE"]:
+                    self.state_tracker["IMPROPER_BOWLING"] += 1
                 self.state_tracker["state_seq"] = []
                 self.state_tracker["INCORRECT_POSTURE"] = False
 
             if front_knee_angle < self.thresholds["FRONT_KNEE_ANGLE"][0]:
                 self.state_tracker["DISPLAY_TEXT"][0] = True
+                speak_feedback("cricket_0", self.FEEDBACK_ID_MAP[0][0].capitalize())
                 self.state_tracker["INCORRECT_POSTURE"] = True
             if trunk_angle > self.thresholds["TRUNK_TILT"]:
                 self.state_tracker["DISPLAY_TEXT"][1] = True
+                speak_feedback("cricket_1", self.FEEDBACK_ID_MAP[1][0].capitalize())
                 self.state_tracker["INCORRECT_POSTURE"] = True
             if elbow_angle < self.thresholds["ELBOW_EXTENSION"] and support_knee_angle > 120:
                 self.state_tracker["DISPLAY_TEXT"][2] = True
+                speak_feedback("cricket_2", self.FEEDBACK_ID_MAP[2][0].capitalize())
                 self.state_tracker["INCORRECT_POSTURE"] = True
             if plant_spacing < 70:
                 self.state_tracker["DISPLAY_TEXT"][3] = True
+                speak_feedback("cricket_3", self.FEEDBACK_ID_MAP[3][0].capitalize())
                 self.state_tracker["INCORRECT_POSTURE"] = True
 
             if self.state_tracker["curr_state"] == self.state_tracker["prev_state"]:
