@@ -15,7 +15,6 @@ if not st.session_state.get('authentication_status'):
     st.info('Please login from the Homepage to access this module.')
     st.stop()
 
-from Homepage import set_sidebar_visibility  
 
 BASE_DIR = os.path.abspath(os.path.join(__file__, '../../'))
 sys.path.append(BASE_DIR)

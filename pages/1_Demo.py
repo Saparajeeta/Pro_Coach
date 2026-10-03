@@ -1,8 +1,6 @@
 import streamlit as st
 from pathlib import Path
-from Homepage import set_sidebar_visibility
 
-set_sidebar_visibility(st.session_state.get("authentication_status"))
 
 st.set_page_config(layout="wide", page_title="Form Masterclass")
 

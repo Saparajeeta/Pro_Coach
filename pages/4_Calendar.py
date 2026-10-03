@@ -12,9 +12,7 @@ if not st.session_state.get('authentication_status'):
     st.info('Please login from the Homepage to access this module.')
     st.stop()
 
-from Homepage import set_sidebar_visibility
 
-set_sidebar_visibility(st.session_state.get("authentication_status"))
 
 st.title("Workout Calendar")
 

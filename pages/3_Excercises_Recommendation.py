@@ -1,9 +1,7 @@
 import streamlit as st
 import datetime
 import json
-from Homepage import set_sidebar_visibility
 
-set_sidebar_visibility(st.session_state.get("authentication_status"))
 
 st.set_page_config(layout="wide", page_title="AI Exercise Plan")
 
