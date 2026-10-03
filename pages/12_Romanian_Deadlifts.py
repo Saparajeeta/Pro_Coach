@@ -12,6 +12,7 @@ st.set_page_config(page_title="RDL AI Trainer", page_icon="🏋️", layout="wid
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from exercise_guides import render_guide
 import custom_style
 custom_style.apply_custom_style()
 
@@ -20,6 +21,7 @@ if not st.session_state.get('authentication_status'):
     st.stop()
 
 st.title("🏋️ Romanian Deadlifts AI Trainer")
+render_guide("Romanian Deadlifts")
 st.markdown("Track your hip hinge and knee bend. Ensure your legs stay mostly straight.")
 
 mp_drawing = mp.solutions.drawing_utils

@@ -8,6 +8,7 @@ from aiortc.contrib.media import MediaRecorder
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from exercise_guides import render_guide
 import custom_style
 custom_style.apply_custom_style()
 
@@ -24,6 +25,7 @@ from process_frame_pushups import ProcessFramePushup
 from threshold_pushups import get_thresholds_beginner
 
 st.title('Push-up AI Trainer')
+render_guide("Push-ups")
 
 thresholds = get_thresholds_beginner()
 

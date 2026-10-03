@@ -21,11 +21,13 @@ BASE_DIR = os.path.abspath(os.path.join(__file__, '../../'))
 sys.path.append(BASE_DIR)
 
 from core.utils import get_mediapipe_pose
+from exercise_guides import render_guide
 from core.process_frame_football import ProcessFrameFootball
 from core.threshold_football import get_thresholds_beginner
 from core.db_utils import record_processor_session
 
 st.title('Football Kick Mechanics Lab')
+render_guide("Football Kick")
 st.session_state['active_exercise'] = 'Football Kick'
 st.caption('Analyze backswing loading, knee snap speed, and plant-foot spacing from a side-on camera angle.')
 st.info(

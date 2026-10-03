@@ -8,6 +8,7 @@ from aiortc.contrib.media import MediaRecorder
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from exercise_guides import render_guide
 import custom_style
 custom_style.apply_custom_style()
 
@@ -26,6 +27,7 @@ from threshold_kickback import get_thresholds_beginner
 
 
 st.title('Bicep Curls Trainer')
+render_guide("Tricep Kickback")
 
 
 thresholds = None 

@@ -13,6 +13,7 @@ st.set_page_config(page_title="Shoulder Press AI", page_icon="🏋️", layout="
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from exercise_guides import render_guide
 import custom_style
 custom_style.apply_custom_style()
 
@@ -21,6 +22,7 @@ if not st.session_state.get('authentication_status'):
     st.stop()
 
 st.title("🏋️ Overhead Dumbbell Shoulder Press AI Trainer")
+render_guide("Shoulder Press")
 st.markdown("Track your Overhead Dumbbell Shoulder Press form in real-time. Ensure your elbows drop to 90 degrees and fully extend at the top.")
 
 mp_drawing = mp.solutions.drawing_utils

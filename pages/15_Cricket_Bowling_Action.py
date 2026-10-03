@@ -21,11 +21,13 @@ BASE_DIR = os.path.abspath(os.path.join(__file__, '../../'))
 sys.path.append(BASE_DIR)
 
 from core.utils import get_mediapipe_pose
+from exercise_guides import render_guide
 from core.process_frame_cricket import ProcessFrameCricket
 from core.threshold_cricket import get_thresholds_beginner
 from core.db_utils import record_processor_session
 
 st.title('Cricket Bowling Action Lab')
+render_guide("Cricket Bowling")
 st.session_state['active_exercise'] = 'Cricket Bowling'
 st.caption('Track elbow extension, trunk lean, and front-knee load in a side-on fast bowling view.')
 st.info(

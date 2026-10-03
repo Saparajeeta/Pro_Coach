@@ -21,6 +21,7 @@ if not st.session_state.get('authentication_status'):
     st.stop()
 
 st.title("🧘 Tree Pose (Vrikshasana)")
+render_guide("Tree Pose")
 st.markdown("Hold your tree pose. The timer starts when your knee angle is <= 60 degrees.")
 
 mp_drawing = mp.solutions.drawing_utils

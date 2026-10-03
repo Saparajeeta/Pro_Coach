@@ -21,6 +21,7 @@ if not st.session_state.get('authentication_status'):
     st.stop()
 
 st.title("🧘 Warrior II Pose (Virabhadrasana II)")
+render_guide("Warrior II Pose")
 st.markdown("Hold your Warrior II pose. Keep your front knee bent and arms raised.")
 
 mp_drawing = mp.solutions.drawing_utils

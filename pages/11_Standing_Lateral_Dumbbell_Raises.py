@@ -12,6 +12,7 @@ st.set_page_config(page_title="Lateral Raises AI", page_icon="🏋️", layout="
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from exercise_guides import render_guide
 import custom_style
 custom_style.apply_custom_style()
 
@@ -20,6 +21,7 @@ if not st.session_state.get('authentication_status'):
     st.stop()
 
 st.title("🏋️ Standing Lateral Dumbbell Raises AI")
+render_guide("Lateral Raises")
 st.markdown("Track your lateral raises. Do not raise your arms past 100 degrees (abduction angle).")
 
 mp_drawing = mp.solutions.drawing_utils
