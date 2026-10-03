@@ -11,7 +11,8 @@ def generate_hashes():
     for file in core_files:
         if os.path.exists(file):
             with open(file, "rb") as f:
-                file_hash = hashlib.sha256(f.read()).hexdigest()
+                data = f.read().replace(b"\r\n", b"\n")
+                file_hash = hashlib.sha256(data).hexdigest()
                 hashes[file] = file_hash
                 
     with open("security_hashes.json", "w") as f:
@@ -31,7 +32,8 @@ def verify_integrity():
     for file, stored_hash in stored_hashes.items():
         if os.path.exists(file):
             with open(file, "rb") as f:
-                current_hash = hashlib.sha256(f.read()).hexdigest()
+                data = f.read().replace(b"\r\n", b"\n")
+                current_hash = hashlib.sha256(data).hexdigest()
                 if current_hash != stored_hash:
                     st.error(f"🚨 SECURITY ALERT: Integrity check failed for {file}. The application has been tampered with. Please run 'python security.py --update' to legitimize your changes.")
                     st.stop()
