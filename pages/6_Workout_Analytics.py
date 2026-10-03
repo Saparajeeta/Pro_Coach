@@ -36,6 +36,7 @@ st.markdown(
 )
 
 st.title("📊 Workout Analytics Dashboard")
+st.caption("Charts other than the mistake log use demo data.")
 st.markdown("Analyze your kinematic telemetry, review accuracy trends, and track your PRs.")
 
 @st.cache_data

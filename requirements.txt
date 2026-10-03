@@ -8,3 +8,4 @@ plotly
 streamlit-authenticator
 streamlit-calendar
 python-dotenv
+pywin32; sys_platform == "win32"

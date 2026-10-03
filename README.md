@@ -4,7 +4,7 @@
 
 ## 🌟 Features
 
-- **Real-Time Posture Analysis:** Tracks and evaluates form during various exercises using a webcam or uploaded videos.
+- **Real-Time Posture Analysis:** Tracks and evaluates form during various exercises using a webcam.
 - **Multiple Supported Exercises:** 
   - Bicep Curls
   - Squats
@@ -57,8 +57,7 @@ streamlit run Homepage.py
 1. Open the app in your browser (usually `http://localhost:8501`).
 2. Log in using your credentials.
 3. Select an active workspace module from the sidebar (e.g., Pushups, Squats).
-4. Choose between **Live Stream** (via webcam) or **Upload Video**.
-5. Start exercising and receive real-time biomechanical feedback!
+4. Start exercising and receive real-time biomechanical feedback!
 
 ## 📁 Project Structure
 
@@ -69,6 +68,16 @@ streamlit run Homepage.py
 - `audio_feedback.py`: Text-to-speech integration.
 - `utils.py`: Helper functions for drawing landmarks and analyzing angles.
 - `requirements.txt`: Python package dependencies.
+
+## Data and Model Provenance
+- Approach: this project uses a pretrained pose-estimation model (transfer of an existing model) instead of training a new one. Pose landmarks come from the pretrained MediaPipe Pose (BlazePose) model that is bundled inside the mediapipe package (version pinned in requirements.txt). BlazePose is designed for real-time, CPU-only inference.
+- Training data: the BlazePose weights were trained by their authors (Google) on their own data. That data is not part of this repository and was not used or modified here. No model was trained or fine-tuned in this project, and this repository contains no training dataset.
+- Our contribution: converting landmarks to joint and segment-to-vertical angles, exercise-specific finite state machines for repetition counting, rule-based form checks, voice and visual feedback, and the Streamlit web application.
+- Rule-based logic: thresholds are hand-set and defined in thresholds.py, threshold_pushups.py, threshold_curl.py, threshold_kickback.py and threshold_lunges.py, and in the page scripts of the additional exercises. They are not learned from data.
+- OpenPose is not used.
+- Evaluation data: our own recorded exercise videos and manual labels are not part of this repository. See evaluation/README.md for the protocol and how accuracy is computed from evaluation/trials.csv.
+- output_sample.mp4 is a bicep-curl demonstration video used on the Demo page.
+- References: C. Lugaresi et al., "MediaPipe: A framework for building perception pipelines," arXiv:1906.08172, 2019. V. Bazarevsky et al., "BlazePose: On-device real-time body pose tracking," arXiv:2006.10204, 2020.
 
 ## 📄 Copyright & License
 

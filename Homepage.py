@@ -30,15 +30,23 @@ custom_style.apply_custom_style()
 
 file_path = Path(__file__).parent / "hashed.pkl"
 
+missing_env_vars = [
+    name for name in ("APARA_PASS", "ADIT_PASS", "COOKIE_KEY")
+    if not os.getenv(name)
+]
+if missing_env_vars:
+    st.error("Missing APARA_PASS, ADIT_PASS or COOKIE_KEY. Create a .env file from .env.example.")
+    st.stop()
+
 users_data = {
     "usernames": {
         "aparajeeta": {
             "name": "Aparajeeta",
-            "password": os.getenv("APARA_PASS", "fallback_pass")
+            "password": os.getenv("APARA_PASS")
         },
         "aditya": {
             "name": "Aditya",
-            "password": os.getenv("ADIT_PASS", "fallback_pass")
+            "password": os.getenv("ADIT_PASS")
         }
     }
 }
@@ -50,7 +58,7 @@ with open(file_path, "rb") as f:
 authenticator = stauth.Authenticate(
     credentials=users_data,
     cookie_name="The Pro Coach AI",
-    cookie_key=os.getenv("COOKIE_KEY", "fallback_cookie_key"),
+    cookie_key=os.getenv("COOKIE_KEY"),
     cookie_expiry_days=30
 )
 
@@ -141,7 +149,7 @@ elif authentication_status is True:
         <p style='text-align: justify;'>
         Welcome to <b>The Pro Coach</b>, a high-performance biomechanical assessment platform designed for unconstrained training environments. 
         Leveraging MediaPipe BlazePose landmark extraction pipelines alongside continuous angular heuristic analysis, this application eliminates the 
-        traditional supervision gap in home fitness and athletics by providing clinical-grade real-time posture valuation.
+        traditional supervision gap in home fitness and athletics by providing real-time posture feedback.
         </p>
         """,
         unsafe_allow_html=True
@@ -162,10 +170,10 @@ elif authentication_status is True:
     
     new_line(2)
     st.progress(75, text="75% to Level 6 (Titan)")
+    st.caption("Demo values: gamification statistics are placeholders and are not computed from your sessions.")
 
     new_line(2)
     st.markdown("<h2 align='center'>🚀 Getting Started</h2>", unsafe_allow_html=True)
     st.info(
-        "To begin monitoring your kinematics, select an active workspace module from the sidebar. "
-        "Choose between **Live Stream** via your webcam or **Upload an existing video**."
-    )
+        "To begin monitoring your kinematics, select an active workspace module from the sidebar and start the live webcam stream."
+    )

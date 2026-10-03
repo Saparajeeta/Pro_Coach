@@ -5,7 +5,7 @@ import streamlit as st
 
 def generate_hashes():
     """Generates hashes for core files to prevent tampering."""
-    core_files = ["Homepage.py", "utils.py", "threshold_squats.py", "threshold_curl.py"]
+    core_files = ["Homepage.py", "utils.py", "thresholds.py", "threshold_curl.py", "audio_feedback.py"]
     hashes = {}
     
     for file in core_files:
