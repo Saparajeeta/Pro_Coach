@@ -82,3 +82,16 @@ def speak_feedback(key, text, cooldown=4.0):
             return
         _LAST_SPEAK[key] = now
     play_audio(text)
+
+
+def speak(key, text, cooldown=4.0):
+    speak_feedback(key, text, cooldown=cooldown)
+
+
+__all__ = [
+    "VOICE_ENABLED",
+    "set_voice_enabled",
+    "play_audio",
+    "speak_feedback",
+    "speak",
+]

@@ -95,8 +95,9 @@ elif authentication_status is True:
             st.Page("pages/13_Tree_Pose.py", title="Tree Pose", icon="🧘"),
             st.Page("pages/14_Warrior_II_Pose.py", title="Warrior II Pose", icon="🧘"),
         ],
-        "Games": [
-            st.Page("pages/Games_Placeholder.py", title="Games", icon="🎮"),
+        "Sports Exercises": [
+            st.Page("pages/15_Cricket_Bowling_Action.py", title="Cricket Bowling Action", icon="🏏"),
+            st.Page("pages/16_Football_Kick.py", title="Football Kick", icon="⚽"),
         ],
         "Tools": [
             st.Page("pages/1_Demo.py", title="Demo", icon="🎬"),
