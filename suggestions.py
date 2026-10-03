@@ -21,6 +21,21 @@ FOLLOW_UPS = {
         {"page": "pages/Squat AI Trainer.py", "label": "Squats", "reason": "works the same lower-body pattern in a different range of motion"},
         {"page": "pages/12_Romanian_Deadlifts.py", "label": "Romanian Deadlifts", "reason": "strengthens the posterior chain with a different movement pattern"},
     ],
+    "Shoulder Press": [
+        {"page": "pages/11_Standing_Lateral_Dumbbell_Raises.py", "label": "Lateral Raises", "reason": "offers another shoulder movement pattern"},
+    ],
+    "Lateral Raises": [
+        {"page": "pages/10_Overhead_Dumbbell_Shoulder_Press.py", "label": "Shoulder Press", "reason": "offers another shoulder movement pattern"},
+    ],
+    "Romanian Deadlifts": [
+        {"page": "pages/Squat AI Trainer.py", "label": "Squats", "reason": "offers another lower-body movement pattern"},
+    ],
+    "Cricket Bowling": [
+        {"page": "pages/16_Football_Kick.py", "label": "Football Kick", "reason": "offers a different sports movement to practice"},
+    ],
+    "Football Kick": [
+        {"page": "pages/15_Cricket_Bowling_Action.py", "label": "Cricket Bowling", "reason": "offers a different sports movement to practice"},
+    ],
 }
 
 MISTAKE_TIPS = {

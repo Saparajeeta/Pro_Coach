@@ -14,6 +14,9 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from exercise_guides import render_guide
+from view_options import render_view_controls
+import session_stats
+from workout_summary import start_workout, render_finish_workout
 import custom_style
 custom_style.apply_custom_style()
 
@@ -23,6 +26,7 @@ if not st.session_state.get('authentication_status'):
 
 st.title("🏋️ Overhead Dumbbell Shoulder Press AI Trainer")
 render_guide("Shoulder Press")
+session_started_at = start_workout("Shoulder Press")
 st.markdown("Track your Overhead Dumbbell Shoulder Press form in real-time. Ensure your elbows drop to 90 degrees and fully extend at the top.")
 
 mp_drawing = mp.solutions.drawing_utils
@@ -123,30 +127,35 @@ def out_recorder_factory() -> MediaRecorder:
 def video_frame_callback(frame: av.VideoFrame):
     img = frame.to_ndarray(format="bgr24")
     img = processor.process(img)
+    session_stats.update("Shoulder Press", processor.counter, 0)
     import cv2
     img = cv2.resize(img, (720, 480))
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
+stream_column = render_view_controls("shoulder_press")
 st.caption("Before you start: stand so your whole body is visible, with the side or front view shown in the guide, and good lighting.")
 
-webrtc_streamer(
-    key="shoulder-press",
-    video_frame_callback=video_frame_callback,
-    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-    media_stream_constraints={"video": True, "audio": False},
-    video_html_attrs=VideoHTMLAttributes(autoPlay=True, controls=False, muted=False),
-    out_recorder_factory=out_recorder_factory
-)
+with stream_column:
+    webrtc_streamer(
+        key="shoulder-press",
+        video_frame_callback=video_frame_callback,
+        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+        media_stream_constraints={"video": True, "audio": False},
+        video_html_attrs=VideoHTMLAttributes(autoPlay=True, controls=False, muted=False),
+        out_recorder_factory=out_recorder_factory
+    )
 
-download_button = st.empty()
+    download_button = st.empty()
 
-if os.path.exists(output_video_file):
-    with open(output_video_file, 'rb') as op_vid:
-        download = download_button.download_button('Download Video', data=op_vid, file_name='shoulder_press_live.flv')
-        if download:
-            st.session_state['download_shoulder'] = True
+    if os.path.exists(output_video_file):
+        with open(output_video_file, 'rb') as op_vid:
+            download = download_button.download_button('Download Video', data=op_vid, file_name='shoulder_press_live.flv')
+            if download:
+                st.session_state['download_shoulder'] = True
 
-if os.path.exists(output_video_file) and st.session_state['download_shoulder']:
-    os.remove(output_video_file)
-    st.session_state['download_shoulder'] = False
-    download_button.empty()
+    if os.path.exists(output_video_file) and st.session_state['download_shoulder']:
+        os.remove(output_video_file)
+        st.session_state['download_shoulder'] = False
+        download_button.empty()
+
+render_finish_workout("Shoulder Press", session_started_at, incorrect_available=False)

@@ -13,6 +13,9 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from exercise_guides import render_guide
+from view_options import render_view_controls
+import session_stats
+from workout_summary import start_workout, render_finish_workout
 import custom_style
 custom_style.apply_custom_style()
 
@@ -22,6 +25,7 @@ if not st.session_state.get('authentication_status'):
 
 st.title("🏋️ Standing Lateral Dumbbell Raises AI")
 render_guide("Lateral Raises")
+session_started_at = start_workout("Lateral Raises")
 st.markdown("Track your lateral raises. Do not raise your arms past 100 degrees (abduction angle).")
 
 mp_drawing = mp.solutions.drawing_utils
@@ -125,30 +129,35 @@ def out_recorder_factory() -> MediaRecorder:
 def video_frame_callback(frame: av.VideoFrame):
     img = frame.to_ndarray(format="bgr24")
     img = processor.process(img)
+    session_stats.update("Lateral Raises", processor.counter, 0)
     import cv2
     img = cv2.resize(img, (720, 480))
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
+stream_column = render_view_controls("lateral_raises")
 st.caption("Before you start: stand so your whole body is visible, with the side or front view shown in the guide, and good lighting.")
 
-webrtc_streamer(
-    key="lateral-raises",
-    video_frame_callback=video_frame_callback,
-    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-    media_stream_constraints={"video": True, "audio": False},
-    video_html_attrs=VideoHTMLAttributes(autoPlay=True, controls=False, muted=False),
-    out_recorder_factory=out_recorder_factory
-)
+with stream_column:
+    webrtc_streamer(
+        key="lateral-raises",
+        video_frame_callback=video_frame_callback,
+        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+        media_stream_constraints={"video": True, "audio": False},
+        video_html_attrs=VideoHTMLAttributes(autoPlay=True, controls=False, muted=False),
+        out_recorder_factory=out_recorder_factory
+    )
 
-download_button = st.empty()
+    download_button = st.empty()
 
-if os.path.exists(output_video_file):
-    with open(output_video_file, 'rb') as op_vid:
-        download = download_button.download_button('Download Video', data=op_vid, file_name='lateral_raises_live.flv')
-        if download:
-            st.session_state['download_lateral'] = True
+    if os.path.exists(output_video_file):
+        with open(output_video_file, 'rb') as op_vid:
+            download = download_button.download_button('Download Video', data=op_vid, file_name='lateral_raises_live.flv')
+            if download:
+                st.session_state['download_lateral'] = True
 
-if os.path.exists(output_video_file) and st.session_state['download_lateral']:
-    os.remove(output_video_file)
-    st.session_state['download_lateral'] = False
-    download_button.empty()
+    if os.path.exists(output_video_file) and st.session_state['download_lateral']:
+        os.remove(output_video_file)
+        st.session_state['download_lateral'] = False
+        download_button.empty()
+
+render_finish_workout("Lateral Raises", session_started_at, incorrect_available=False)

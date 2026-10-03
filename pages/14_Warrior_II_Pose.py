@@ -13,6 +13,9 @@ st.set_page_config(page_title="Warrior II AI", page_icon="🧘", layout="wide")
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from exercise_guides import render_guide
+from view_options import render_view_controls
+from workout_summary import start_workout, render_finish_workout
 import custom_style
 custom_style.apply_custom_style()
 
@@ -22,6 +25,7 @@ if not st.session_state.get('authentication_status'):
 
 st.title("🧘 Warrior II Pose (Virabhadrasana II)")
 render_guide("Warrior II Pose")
+session_started_at = start_workout("Warrior II Pose")
 st.markdown("Hold your Warrior II pose. Keep your front knee bent and arms raised.")
 
 mp_drawing = mp.solutions.drawing_utils
@@ -145,26 +149,30 @@ def video_frame_callback(frame: av.VideoFrame):
     img = cv2.resize(img, (720, 480))
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
+stream_column = render_view_controls("warrior_ii")
 st.caption("Before you start: stand so your whole body is visible, with the side or front view shown in the guide, and good lighting.")
 
-webrtc_streamer(
-    key="warrior-ii",
-    video_frame_callback=video_frame_callback,
-    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-    media_stream_constraints={"video": True, "audio": False},
-    video_html_attrs=VideoHTMLAttributes(autoPlay=True, controls=False, muted=False),
-    out_recorder_factory=out_recorder_factory
-)
+with stream_column:
+    webrtc_streamer(
+        key="warrior-ii",
+        video_frame_callback=video_frame_callback,
+        rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+        media_stream_constraints={"video": True, "audio": False},
+        video_html_attrs=VideoHTMLAttributes(autoPlay=True, controls=False, muted=False),
+        out_recorder_factory=out_recorder_factory
+    )
 
-download_button = st.empty()
+    download_button = st.empty()
 
-if os.path.exists(output_video_file):
-    with open(output_video_file, 'rb') as op_vid:
-        download = download_button.download_button('Download Video', data=op_vid, file_name='warrior_ii_live.flv')
-        if download:
-            st.session_state['download_warrior'] = True
+    if os.path.exists(output_video_file):
+        with open(output_video_file, 'rb') as op_vid:
+            download = download_button.download_button('Download Video', data=op_vid, file_name='warrior_ii_live.flv')
+            if download:
+                st.session_state['download_warrior'] = True
 
-if os.path.exists(output_video_file) and st.session_state['download_warrior']:
-    os.remove(output_video_file)
-    st.session_state['download_warrior'] = False
-    download_button.empty()
+    if os.path.exists(output_video_file) and st.session_state['download_warrior']:
+        os.remove(output_video_file)
+        st.session_state['download_warrior'] = False
+        download_button.empty()
+
+render_finish_workout("Warrior II Pose", session_started_at, correct_available=False, incorrect_available=False)
