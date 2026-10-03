@@ -93,7 +93,7 @@ with stream_column:
         st.session_state['download'] = False
         download_button.empty()
 
-render_finish_workout("Dumbbell Fly", session_started_at, incorrect_available=False)
+render_finish_workout("Dumbbell Fly", session_started_at)
 
 
     
