@@ -132,7 +132,7 @@ GUIDES = {
         "mistakes": ["Rushing into the balance", "Letting the hips tilt", "Looking around while balancing"],
         "safety": "If you feel pain, stop and consult a qualified trainer or doctor.",
     },
-    "Warrior II Pose": {
+    "Warrior II": {
         "goal": "Practice a steady wide stance with your arms extended.",
         "camera": "Use a front or side view and stand far enough away to keep your full body and arms in frame.",
         "steps": [

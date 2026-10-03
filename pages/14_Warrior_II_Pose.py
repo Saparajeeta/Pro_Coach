@@ -24,7 +24,7 @@ if not st.session_state.get('authentication_status'):
     st.stop()
 
 st.title("🧘 Warrior II Pose (Virabhadrasana II)")
-render_guide("Warrior II Pose")
+render_guide("Warrior II")
 session_started_at = start_workout("Warrior II Pose")
 st.markdown("Hold your Warrior II pose. Keep your front knee bent and arms raised.")
 
