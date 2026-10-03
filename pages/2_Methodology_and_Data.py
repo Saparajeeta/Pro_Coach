@@ -36,7 +36,8 @@ st.markdown(
 st.markdown("### What this project adds")
 st.markdown(
     "- Converting landmarks to joint and segment-to-vertical angles, exercise-specific finite state machines for repetition counting, rule-based form checks, voice and visual feedback, and the Streamlit web application.\n"
-    "- View-size controls, voice feedback that repeats on-screen messages, and rule-based post-workout suggestions."
+    "- View-size controls, voice feedback that repeats on-screen messages, and rule-based post-workout suggestions.\n"
+    "- Beginner guides, voice feedback, post-workout suggestions and session history."
 )
 
 st.markdown("### Thresholds")

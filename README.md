@@ -85,7 +85,14 @@ streamlit run Homepage.py
 - Sidebar sections for Exercises, Yoga and Games.
 - Post-workout suggestions.
 - Added exercises: Cricket Bowling Action and Football Kick.
+- Beginner guide on every page.
+- Ready-check message before each live stream.
+- Finish-workout suggestions.
+- Session history.
 - The app is live-webcam only.
+
+## Known limitations
+- Cricket and Football thresholds are hand-set and not evaluated; quantitative evaluation covers squats and push-ups only.
 
 ## 📄 Copyright & License
 
