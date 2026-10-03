@@ -148,3 +148,18 @@ else:
                 st.write("**Biomechanics Engine Log:** This form break was logged by the AI.")
                 st.markdown("### Corrective Plan Generated:")
                 st.info("Focus on lighter weights and form-specific isolation exercises.")
+
+st.subheader("Recent sessions")
+history_file = "session_history.json"
+if os.path.exists(history_file):
+    try:
+        with open(history_file, "r", encoding="utf-8") as history_file_handle:
+            session_history = json.load(history_file_handle)
+        if session_history:
+            st.dataframe(pd.DataFrame(session_history[-10:]))
+        else:
+            st.info("No sessions recorded yet.")
+    except (OSError, TypeError, ValueError):
+        st.info("No sessions recorded yet.")
+else:
+    st.info("No sessions recorded yet.")
