@@ -79,6 +79,14 @@ streamlit run Homepage.py
 - output_sample.mp4 is a bicep-curl demonstration video used on the Demo page.
 - References: C. Lugaresi et al., "MediaPipe: A framework for building perception pipelines," arXiv:1906.08172, 2019. V. Bazarevsky et al., "BlazePose: On-device real-time body pose tracking," arXiv:2006.10204, 2020.
 
+## New features
+- View-size and full-screen controls.
+- Voice feedback that repeats on-screen messages with an on/off toggle.
+- Sidebar sections for Exercises, Yoga and Games.
+- Post-workout suggestions.
+- Added exercises: Cricket Bowling Action and Football Kick.
+- The app is live-webcam only.
+
 ## 📄 Copyright & License
 
 © 2026 Aparajeeta. All Rights Reserved. 

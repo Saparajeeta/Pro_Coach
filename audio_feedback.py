@@ -1,13 +1,22 @@
 import queue
 import sys
 import threading
+import time
 
 try:
     import pyttsx3
 except ImportError:
     pyttsx3 = None
 
+VOICE_ENABLED = True
 _AUDIO_QUEUE = queue.Queue(maxsize=3)
+_LAST_SPEAK = {}
+_SPEAK_LOCK = threading.Lock()
+
+
+def set_voice_enabled(flag):
+    global VOICE_ENABLED
+    VOICE_ENABLED = bool(flag)
 
 
 def _audio_worker():
@@ -55,9 +64,21 @@ if pyttsx3 is not None:
 
 
 def play_audio(text):
-    if pyttsx3 is None:
+    if not VOICE_ENABLED or pyttsx3 is None or text is None:
         return
     try:
         _AUDIO_QUEUE.put_nowait(text)
     except queue.Full:
         pass
+
+
+def speak_feedback(key, text, cooldown=4.0):
+    if not VOICE_ENABLED or text is None:
+        return
+    now = time.monotonic()
+    with _SPEAK_LOCK:
+        last = _LAST_SPEAK.get(key, 0.0)
+        if now - last < cooldown:
+            return
+        _LAST_SPEAK[key] = now
+    play_audio(text)

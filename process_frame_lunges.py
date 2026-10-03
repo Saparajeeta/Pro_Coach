@@ -2,6 +2,7 @@ import time
 import cv2
 import numpy as np
 from utils import find_angle, get_landmark_features, draw_text, draw_dotted_line
+from audio_feedback import speak_feedback
 
 
 class ProcessFrame:
@@ -354,6 +355,7 @@ class ProcessFrame:
 
                     if len(self.state_tracker['state_seq']) == 3 and not self.state_tracker['INCORRECT_POSTURE']:
                         self.state_tracker['SQUAT_COUNT']+=1
+                        speak_feedback("lunges_rep", f"Good. {self.state_tracker['SQUAT_COUNT']}", cooldown=0.5)
                         play_sound = str(self.state_tracker['SQUAT_COUNT'])
                         
                     elif 's2' in self.state_tracker['state_seq'] and len(self.state_tracker['state_seq'])==1:
@@ -379,26 +381,35 @@ class ProcessFrame:
                 else:
                     if hip_vertical_angle > self.thresholds['HIP_THRESH'][1]:
                         self.state_tracker['DISPLAY_TEXT'][0] = True
-                        
+                        if self.state_tracker['COUNT_FRAMES'][0] == 0:
+                            speak_feedback("lunges_0", "Bend backwards")
 
                     elif hip_vertical_angle < self.thresholds['HIP_THRESH'][0] and \
                          self.state_tracker['state_seq'].count('s2')==1:
                             self.state_tracker['DISPLAY_TEXT'][1] = True
+                            if self.state_tracker['COUNT_FRAMES'][1] == 0:
+                                speak_feedback("lunges_1", "Bend forward")
                         
                                         
                     
                     if self.thresholds['KNEE_THRESH'][0] < knee_vertical_angle < self.thresholds['KNEE_THRESH'][1] and \
                        self.state_tracker['state_seq'].count('s2')==1:
+                        if self.state_tracker['COUNT_FRAMES'][4] == 0:
+                            speak_feedback("lunges_4", "Lower your hips")
                         self.state_tracker['LOWER_HIPS'] = True
 
 
                     elif knee_vertical_angle > self.thresholds['KNEE_THRESH'][2]:
                         self.state_tracker['DISPLAY_TEXT'][3] = True
+                        if self.state_tracker['COUNT_FRAMES'][3] == 0:
+                            speak_feedback("lunges_3", "Squat too deep")
                         self.state_tracker['INCORRECT_POSTURE'] = True
 
                     
                     if (ankle_vertical_angle > self.thresholds['ANKLE_THRESH']):
                         self.state_tracker['DISPLAY_TEXT'][2] = True
+                        if self.state_tracker['COUNT_FRAMES'][2] == 0:
+                            speak_feedback("lunges_2", "Knee falling over toe")
                         self.state_tracker['INCORRECT_POSTURE'] = True
 
 

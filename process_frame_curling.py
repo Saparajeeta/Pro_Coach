@@ -2,6 +2,7 @@ import time
 import cv2
 import numpy as np
 from utils import find_angle, get_landmark_features, draw_text, draw_dotted_line
+from audio_feedback import speak_feedback
 
 
 class ProcessFrame:
@@ -352,6 +353,7 @@ class ProcessFrame:
 
                     if len(self.state_tracker['state_seq']) == 3 and not self.state_tracker['INCORRECT_POSTURE']:
                         self.state_tracker['CURL_COUNT']+=1
+                        speak_feedback("curl_rep", f"Good. {self.state_tracker['CURL_COUNT']}", cooldown=0.5)
                         play_sound = str(self.state_tracker['CURL_COUNT'])
                         
                     elif 's2' in self.state_tracker['state_seq'] and len(self.state_tracker['state_seq'])==1:
@@ -378,15 +380,21 @@ class ProcessFrame:
                     if 's2' in self.state_tracker['state_seq'] and 's3' not in self.state_tracker:
                         self.state_tracker['CURL_HIGHER'] = True
                     if shldr_hip_angle > self.thresholds['HIP_THRESH']:
-                        self.state_tracker['DISPLAY_TEXT'][0] = True        
+                        self.state_tracker['DISPLAY_TEXT'][0] = True
+                        if self.state_tracker['COUNT_FRAMES'][0] == 0:
+                            speak_feedback("curl_0", "Straighten your back")
 
                     
                     if (elbow_shldr_angle > self.thresholds['SHOULDER_THRESH']) and flag == True:
                         self.state_tracker['DISPLAY_TEXT'][1] = True
+                        if self.state_tracker['COUNT_FRAMES'][1] == 0:
+                            speak_feedback("curl_1", "Move hand forward")
                         self.state_tracker['INCORRECT_POSTURE'] = True
 
                     elif (elbow_shldr_angle > self.thresholds['SHOULDER_THRESH']) and flag == False:
                         self.state_tracker['DISPLAY_TEXT'][2] = True
+                        if self.state_tracker['COUNT_FRAMES'][2] == 0:
+                            speak_feedback("curl_2", "Move hand backward")
                         self.state_tracker['INCORRECT_POSTURE'] = True
 
 

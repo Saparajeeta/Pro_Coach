@@ -2,7 +2,7 @@ import time
 import cv2
 import numpy as np
 from utils import find_angle, get_landmark_features, draw_text, draw_dotted_line, log_mistake
-from audio_feedback import play_audio
+from audio_feedback import play_audio, speak_feedback
 
 class ProcessFramePushup:
     def __init__(self, thresholds, flip_frame=False):
@@ -126,6 +126,7 @@ class ProcessFramePushup:
                     self.state_tracker['PUSHUP_COUNT'] += 1
                     play_sound = str(self.state_tracker['PUSHUP_COUNT'])
                     play_audio(f"Good. {self.state_tracker['PUSHUP_COUNT']}")
+                    speak_feedback("pushups_rep", f"Good. {self.state_tracker['PUSHUP_COUNT']}", cooldown=0.5)
                 elif 's2' in self.state_tracker['state_seq'] and len(self.state_tracker['state_seq']) == 1:
                     self.state_tracker['IMPROPER_PUSHUP'] += 1
                     play_sound = 'incorrect'
@@ -141,6 +142,7 @@ class ProcessFramePushup:
                     self.state_tracker['INCORRECT_POSTURE'] = True
                     if self.state_tracker['COUNT_FRAMES'][0] == 0:
                         play_audio("Keep your back straight")
+                        speak_feedback("pushups_0", "Keep your back straight")
                         log_mistake("Sagging Back in Pushups")
 
             display_inactivity = False
