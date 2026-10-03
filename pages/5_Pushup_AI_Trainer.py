@@ -47,6 +47,8 @@ def video_frame_callback(frame: av.VideoFrame):
 def out_recorder_factory() -> MediaRecorder:
     return MediaRecorder(output_video_file)
 
+st.caption("Before you start: stand so your whole body is visible, with the side or front view shown in the guide, and good lighting.")
+
 ctx = webrtc_streamer(
     key="Pushup-pose-analysis",
     video_frame_callback=video_frame_callback,

@@ -127,6 +127,8 @@ def video_frame_callback(frame: av.VideoFrame):
     img = cv2.resize(img, (720, 480))
     return av.VideoFrame.from_ndarray(img, format="bgr24")
 
+st.caption("Before you start: stand so your whole body is visible, with the side or front view shown in the guide, and good lighting.")
+
 webrtc_streamer(
     key="shoulder-press",
     video_frame_callback=video_frame_callback,
