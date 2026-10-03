@@ -389,26 +389,35 @@ class ProcessFrame:
                 else:
                     if hip_vertical_angle > self.thresholds['HIP_THRESH'][1]:
                         self.state_tracker['DISPLAY_TEXT'][0] = True
-                        
+                        if self.state_tracker['COUNT_FRAMES'][0] == 0:
+                            play_audio("Bend backwards")
 
                     elif hip_vertical_angle < self.thresholds['HIP_THRESH'][0] and \
                          self.state_tracker['state_seq'].count('s2')==1:
                             self.state_tracker['DISPLAY_TEXT'][1] = True
+                            if self.state_tracker['COUNT_FRAMES'][1] == 0:
+                                play_audio("Bend forward")
                         
                                         
                     
                     if self.thresholds['KNEE_THRESH'][0] < knee_vertical_angle < self.thresholds['KNEE_THRESH'][1] and \
                        self.state_tracker['state_seq'].count('s2')==1:
+                        if self.state_tracker['COUNT_FRAMES'][4] == 0:
+                            play_audio("Lower your hips")
                         self.state_tracker['LOWER_HIPS'] = True
 
 
                     elif knee_vertical_angle > self.thresholds['KNEE_THRESH'][2]:
                         self.state_tracker['DISPLAY_TEXT'][3] = True
+                        if self.state_tracker['COUNT_FRAMES'][3] == 0:
+                            play_audio("Squat too deep")
                         self.state_tracker['INCORRECT_POSTURE'] = True
 
                     
                     if (ankle_vertical_angle > self.thresholds['ANKLE_THRESH']):
                         self.state_tracker['DISPLAY_TEXT'][2] = True
+                        if self.state_tracker['COUNT_FRAMES'][2] == 0:
+                            play_audio("Knee falling over toe")
                         self.state_tracker['INCORRECT_POSTURE'] = True
 
 

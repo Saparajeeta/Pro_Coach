@@ -22,8 +22,8 @@ sys.path.append(BASE_DIR)
 
 
 from utils import get_mediapipe_pose
-from process_frame_curling import ProcessFrame
-from threshold_curl import get_thresholds_beginner
+from process_frame_lunges import ProcessFrame
+from threshold_lunges import get_thresholds_beginner
 
 
 st.title('Lunges AI Trainer')

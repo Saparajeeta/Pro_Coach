@@ -27,7 +27,7 @@ from threshold_curl import get_thresholds_beginner
 
 
 st.title('Dumbbell Fly AI Trainer')
-
+st.warning("Experimental: this page uses elbow-angle repetition counting. Form feedback is not calibrated for dumbbell fly.")
 
 thresholds = None 
 

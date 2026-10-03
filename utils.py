@@ -90,7 +90,7 @@ def find_angle(p1, p2, ref_pt = np.array([0,0])):
     cos_theta = (np.dot(p1_ref,p2_ref)) / (1.0 * np.linalg.norm(p1_ref) * np.linalg.norm(p2_ref))
     theta = np.arccos(np.clip(cos_theta, -1.0, 1.0))
             
-    degree = int(180 / np.pi) * theta
+    degree = np.degrees(theta)
 
     return int(degree)
 
@@ -167,4 +167,4 @@ def log_mistake(mistake_str):
 
     mistakes.append({"mistake": mistake_str, "time": datetime.now().isoformat()})
     with open(log_file, "w") as f:
-        json.dump(mistakes, f)
+        json.dump(mistakes, f)
